@@ -4,10 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="javascript.js"></script>
 </head>
 <body>
     
-    <script src="javascript.js"></script>
+    <div id="buttons">
+        <button id="rock">
+            Rock
+        </button>
+        <button id="paper">
+            Paper
+        </button>
+        <button id="scissors">
+            Scissors
+        </button>
+    </div>
+
+    <div id="currentRound">
+        <p id="yourAction"></p>
+        <p id="computerAction"></p>
+        <p id="roundResult"></p>
+    </div>
+
+    <div id="resultList">
+        <p id="round">Round: 0</p>
+        <p>Your results are the following: </p>
+        <p id="humanResult">Human: 0</p>
+        <p id="computerResult">Computer: 0</p>
+    </div>
+
+    <p id="winner"></p>
 
 </body>
 </html>

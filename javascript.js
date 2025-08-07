@@ -1,4 +1,5 @@
 function getComputerChoice() {
+    
     let choice = ""
     let choicenum = Math.floor(Math.random() * 3)
 
@@ -14,6 +15,7 @@ function getComputerChoice() {
 }
 
 function getHumanChoice() {
+
     let choice = prompt("Choose Rock, Paper or Scissors")
 
     return choice
@@ -21,41 +23,68 @@ function getHumanChoice() {
 
 function playGame() {
     function playRound(humanChoice, computerChoice) {
-        console.log(`You chose ${humanChoice.toLowerCase()}.`)
-        console.log(`The computer chose ${computerChoice.toLowerCase()}.`)
+
+        if (rounds === 5) {
+            humanScore = 0
+            computerScore = 0
+            rounds = 0
+            winner.textContent = ""
+        }
+
+        yourAction.textContent = `You chose ${humanChoice.toLowerCase()}.`
+        computerAction.textContent = `The computer chose ${computerChoice.toLowerCase()}.`
 
         if (humanChoice.toUpperCase() === computerChoice.toUpperCase()) {
-            console.log("You draw! No points awarded.")
+            roundResult.textContent = "You draw! No points awarded."
         } else if ((humanChoice.toUpperCase() === "ROCK" && computerChoice.toUpperCase() === "SCISSORS") || (humanChoice.toUpperCase() === "PAPER" && computerChoice.toUpperCase() === "ROCK") || (humanChoice.toUpperCase() === "SCISSORS" && computerChoice.toUpperCase() === "PAPER")) {
-            console.log(`You win! ${humanChoice.toLowerCase()} beats ${computerChoice.toLowerCase()}.`)
+            roundResult.textContent = `You win! ${humanChoice.toUpperCase().slice(0, 1) + humanChoice.toLowerCase().slice(1)} beats ${computerChoice.toLowerCase()}.`
             humanScore += 1
         } else {
-            console.log(`You lose! ${computerChoice.toLowerCase()} beats ${humanChoice.toLowerCase()}.`)
+            roundResult.textContent = `You lose! ${computerChoice.toUpperCase().slice(0, 1) + computerChoice.toLowerCase().slice(1)} beats ${humanChoice.toLowerCase()}.`
             computerScore += 1
         }
+
+        rounds += 1
+
+        humanResult.textContent = `Human: ${humanScore}`
+        computerResult.textContent = `Computer: ${computerScore}`
+        roundCounter.textContent = `Round: ${rounds}`
+
+        if (rounds === 5) {
+            if (humanScore === computerScore) {
+                winner.textContent = `You both scored ${humanScore} times, it's a draw!`
+            } else if (humanScore > computerScore) {
+                winner.textContent = `You win ${humanScore} to ${computerScore}! :)`
+            } else {
+                winner.textContent = `You lose ${computerScore} to ${humanScore}... :(`
+            }
+        }
+        
     }
 
     let humanScore = 0
     let computerScore = 0
+    let rounds = 0
 
-    playRound(getHumanChoice(), getComputerChoice())
-    console.log("")
-    playRound(getHumanChoice(), getComputerChoice())
-    console.log("")
-    playRound(getHumanChoice(), getComputerChoice())
-    console.log("")
-    playRound(getHumanChoice(), getComputerChoice())
-    console.log("")
-    playRound(getHumanChoice(), getComputerChoice())
-    console.log("")
+    const yourAction = document.querySelector("#yourAction")
+    const computerAction = document.querySelector("#computerAction")
+    const roundResult = document.querySelector("#roundResult")
 
-    if (humanScore === computerScore) {
-        console.log(`You both scored ${humanScore} times, it's a draw!`)
-    } else if (humanScore > computerScore) {
-        console.log(`You win ${humanScore} to ${computerScore}! :)`)
-    } else {
-        console.log(`You lose ${computerScore} to ${humanScore}... :(`)
-    }
+    const humanResult = document.querySelector("#humanResult")
+    const computerResult = document.querySelector("#computerResult")
+    const roundCounter = document.querySelector("#round")
+
+    const winner = document.querySelector("#winner")
+
+    const buttonList = document.querySelectorAll("#buttons > button")
+    console.log(buttonList)
+
+    buttonList.forEach((button) => {
+        button.addEventListener("click", (e) => {
+            let humanChoice = e.target.getAttribute("id")
+            playRound(humanChoice, getComputerChoice())
+        })
+    })
 }
 
 playGame()
